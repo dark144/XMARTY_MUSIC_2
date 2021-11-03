@@ -1,44 +1,58 @@
+
+
+import json
 import os
 from os import path
 from typing import Callable
-from asyncio.queues import QueueEmpty
 
 import aiofiles
 import aiohttp
 import ffmpeg
 import requests
-from cache.admins import admins as a
-from callsmusic import callsmusic
-from callsmusic.callsmusic import client as USER
-from callsmusic.queues import queues
-from config import (
-    ASSISTANT_NAME,
-    BOT_NAME,
-    BOT_USERNAME,
-    DURATION_LIMIT,
-    GROUP_SUPPORT,
-    THUMB_IMG,
-    CMD_IMG,
-    UPDATES_CHANNEL,
-    que,
-)
-from downloaders import youtube
-from helpers.admins import get_administrators
-from helpers.channelmusic import get_chat_id
-from helpers.chattitle import CHAT_TITLE
-from helpers.decorators import authorized_users_only
-from helpers.filters import command, other_filters
-from helpers.gets import get_file_name
-from PIL import Image, ImageDraw, ImageFont
-from pyrogram import Client, filters
+import wget
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+from pyrogram import Client
+from pyrogram import filters
+from pyrogram.types import Voice
 from pyrogram.errors import UserAlreadyParticipant
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup
+from pyrogram.types import Message
+from Python_ARQ import ARQ
 from youtube_search import YoutubeSearch
+
+from VCPlayBot.config import ARQ_API_KEY
+from VCPlayBot.config import BOT_NAME as bn
+from VCPlayBot.config import DURATION_LIMIT
+from VCPlayBot.config import UPDATES_CHANNEL as updateschannel
+from VCPlayBot.config import que
+from VCPlayBot.function.admins import admins as a
+from VCPlayBot.helpers.admins import get_administrators
+from VCPlayBot.helpers.channelmusic import get_chat_id
+from VCPlayBot.helpers.errors import DurationLimitError
+from VCPlayBot.helpers.decorators import errors
+from VCPlayBot.helpers.decorators import authorized_users_only
+from VCPlayBot.helpers.filters import command
+from VCPlayBot.helpers.filters import other_filters
+from VCPlayBot.helpers.gets import get_file_name
+from VCPlayBot.services.callsmusic import callsmusic
+from VCPlayBot.services.callsmusic import client as USER
+from VCPlayBot.services.converter.converter import convert
+from VCPlayBot.services.downloaders import youtube
+from VCPlayBot.services.queues import queues
 
 aiohttpsession = aiohttp.ClientSession()
 chat_id = None
-useer = "NaN"
+arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
 DISABLED_GROUPS = []
+useer ="
+
+
+
+
+
 
 
 def cb_admin_check(func: Callable) -> Callable:

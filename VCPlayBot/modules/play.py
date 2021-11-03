@@ -5,7 +5,7 @@ from asyncio.queues import QueueEmpty
 
 import aiofiles
 import aiohttp
-import converter
+
 import ffmpeg
 import requests
 from cache.admins import admins as a
